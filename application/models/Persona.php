@@ -2,7 +2,7 @@
 require_once 'Datos/ManejadorCassandra.php';
 /*
  * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editorjbhmnb.
  */
 
 /**
