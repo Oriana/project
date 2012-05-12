@@ -1,25 +1,15 @@
 <?php
 require_once 'Datos/ManejadorCassandra.php';
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editorjbhmnb.
- */
 
-/**
- * Description of Persona
- *
- * @author karla
- */
 class Persona {
     //put your code here
     
-    function ConsultarUsuarioPorNombre($nombre)
+    function ConsultarUsuarioPorNick($nick)
     {
         
     $a=new ManejadorCassandra();
-    $a->Conectar();
     
-    $x=$a->ConsultaPorParametro('usuario',array('primerNombre'=>$nombre));
+    $x=$a->ConsultaPorParametro('usuario',array('nick'=>$nick));
     $z=$x->getAll();
     return $z;
         
@@ -27,6 +17,65 @@ class Persona {
         
     }
     
+    
+     function InsertarUsuario($biografia,$email,$fechaNaciomiento,$foto,$nick,$primerNombre,$segundoNombre,$primerApellido,$segundoApellido)
+    {
+        
+        
+        if ($this->ConsultarUsuarioPorNick($nick)==NULL){
+         
+         $a=new ManejadorCassandra();
+    
+         $x=$a->Insertar('comentario',$nick,array ('biografia'=>$biografia, 
+                                                   'email'=>$email,
+                                                   'fechaNacimiento'=>$fechaNaciomiento,
+                                                   'foto'=>$foto,
+                                                   'nick'=>$nick,
+                                                   'primerNombre'=>$primerNombre,
+                                                   'segundoNombre'=>$segundoNombre,
+                                                   'primerApellido'=>$primerApellido,
+                                                   'segundoApellido'=>$segundoApellido,
+                                                    ));
+         return $x; 
+        }
+        
+        return 'Este nick ya existe elija otro';
+   
+    }
+    
+     function EliminarUsuario($nick)
+    {
+        
+    $a=new ManejadorCassandra();
+    
+    $x=$a->Eliminar('usuario.'.$nick);
+      
+    }
+    
+    
+      function ModificarUsuario($nick,$biografia,$email,$fechaNaciomiento,$foto,$primerNombre,$segundoNombre,$primerApellido,$segundoApellido)
+    {
+        
+        
+        if ($this->ConsultarUsuarioPorNick($nick)!=NULL){
+         
+         $a=new ManejadorCassandra();
+    
+         $x=$a->Modificar('comentario',$nick,array ('biografia'=>$biografia, 
+                                                   'email'=>$email,
+                                                   'fechaNacimiento'=>$fechaNaciomiento,
+                                                   'foto'=>$foto,
+                                                   'primerNombre'=>$primerNombre,
+                                                   'segundoNombre'=>$segundoNombre,
+                                                   'primerApellido'=>$primerApellido,
+                                                   'segundoApellido'=>$segundoApellido,
+                                                    ));
+         return $x; 
+        }
+        
+        return 'Este usuario no existe';
+   
+    }
     
 }
 

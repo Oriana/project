@@ -41,9 +41,9 @@ class ManejadorCassandra {
     
     function ConsultaPorParametro($cf,$query){
         
-        
+       $this->Conectar();
        $resultado = $this->Cassandra->cf ($cf)->getWhere($query);
-       //echo print_r($karla, true); 
+       $this->Desconectar(); 
         return $resultado;
         
        
@@ -52,11 +52,37 @@ class ManejadorCassandra {
     
      function Eliminar($query){
         
-        
+       $this->Conectar(); 
        $resultado = $this->Cassandra->remove($query);
-       //echo print_r($karla, true); 
+       $this->Desconectar();
         return $resultado;
     
 }
+
+      function Insertar($cf,$key,$query){
+        
+       $this->Conectar();
+       $resultado = $this->Cassandra->cf ($cf)->set($key,$query,Cassandra::CONSISTENCY_QUORUM);
+       $this->Desconectar();
+        return $resultado;
+          
+    }
+    
+    function Modificar($cf,$key,$query){
+        
+       $this->Conectar(); 
+       $resultado = $this->Cassandra->cf ($cf)->set($key,$query,Cassandra::CONSISTENCY_QUORUM);
+       $this->Desconectar();
+        return $resultado;
+    }
+    
+    
+    function Desconectar(){
+
+    $this->Cassandra->closeConnections();
+
+}
+
+    
 }
 ?>
