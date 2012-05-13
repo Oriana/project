@@ -9,4 +9,9 @@
 	$server = new Zend_Rest_Server();
 	$server->setClass('Persona');
 	$server->handle();
-?>
+
+        
+        
+        
+        
+        ?>

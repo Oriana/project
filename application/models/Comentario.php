@@ -41,8 +41,7 @@ class Comentario {
     $z=$x->getAll();
     return $z; 
     
-    
-    }
+   }
     
      function EliminarComentario($id)
     {
@@ -93,6 +92,67 @@ class Comentario {
                                                    ));
              return $x;
     }
+    
+    function ModificarMegustaNoMeGusta($key,$determinante,$nick)
+          
+      {
+        
+            $a=new ManejadorCassandra();
+            
+            
+        
+            $contGusta=ConsultarMeGusta($key);
+            $contNoGusta=ConsultarNOMeGusta($key);
+           
+             $contGusta=$contGusta+1;
+             $contNoGusta=$contNoGusta+1;
+            
+             if($determinante == 1)
+                $x=$a->Insertar('comentario',$key,array ('megusta'=>$contGusta));
+            else
+                $x=$a->Insertar('comentario',$key,array ('nomegusta'=>$conNotGusta));
+            
+            return $x;
+    
+      }
+    
+    
+    function ConsultarMeGusta($idcomentario)
+    {
+        
+    $a=new ManejadorCassandra();
+
+    
+    $x=$a->ConsultaPorParametro('comentario',array('idcomentario'=>$idcomentario));
+    //$z=['key']['MeGusta'];
+    $z=$x->getAll();
+    if ($z[$nick]['megusta']!=null){
+        
+    return $megusta; 
+    }
+    
+    }
+    
+    
+    
+    function ConsultarNOMeGusta($idcomentario)
+    {
+        
+    $a=new ManejadorCassandra();
+
+    
+    $x=$a->ConsultaPorParametro('comentario',array('idcomentario'=>$idcomentario));
+    $z=$x->getAll();
+    if ($z[$nick]['nomegusta']!=null){
+        
+        return $nomegusta;
+        
+    };
+   
+    return $nomegusta; 
+    
+    }
+    
     
 }
 
