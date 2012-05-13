@@ -1,15 +1,7 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+session_start('Usuario');
 
-/**
- * Description of Token
- *
- * @author Aka-Anto
- */
 class Token {
     //put your code here
     
@@ -87,43 +79,43 @@ class Token {
     
    public function ValidarToken($token){
        
-       $x=strtok($token);
-       $i=0;
-       $tok = strtok($token, "_");
-       $Valores='';
-        while ($tok !== false) {
-            $Valores[$i]=$tok;
-            $i++;
-            $tok = strtok("_");
-        }
-        
-       $idUsuario=$Valores[0];
-       $random=$Valores[1];
-       $ip=$random+str_replace(".","",$this->getIP())+$idUsuario;
-       $tiempo=$Valores[3];
-      
-       if (($Valores[2]==$ip) && ((strtotime('now')-$tiempo)<301) ){
-           return 'true';
+       if (isset($_SESSION['Usuario'])){
+       
+           $x=strtok($token);
+           $i=0;
+           $tok = strtok($token, "_");
+           $Valores='';
+            while ($tok !== false) {
+                $Valores[$i]=$tok;
+                $i++;
+                $tok = strtok("_");
+            }
+
+           $idUsuario=$Valores[0];
+           $random=$Valores[1];
+           $ip=$random+str_replace(".","",$this->getIP())+$idUsuario;
+           $tiempo=$Valores[3];
+
+           if (($Valores[2]==$ip) && ((strtotime('now')-$tiempo)<301) ){
+               return true;
+           }
+
        }
-       
-       
-       return 'false';
+       return false;
        
    }
-    
-   public function ObtenerToken($id){
-       
-       $this->setidUsuario($id);
-       $this->setValor();
-       $this->ip=$this->getIP();
-       return $this->valor;
+   
+    public function ObtenerToken(){
+        if (isset($_SESSION['Usuario'])){ 
+           $this->setidUsuario($_SESSION['Usuario']);
+           $this->setValor();
+           $this->ip=$this->getIP();
+           return $this->valor;
+        }
+        return 'Usuario no ha iniciado sesion';
    }
-    
 }
 
-$t=new Token();
-$x=$t->ObtenerToken('anto');
-echo $x."<br/>";
-echo $t->ValidarToken('anto_3232_130233_1336846988');
+
 
 ?>
