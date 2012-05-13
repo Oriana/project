@@ -2,10 +2,13 @@
 
 require_once 'Datos/ManejadorCassandra.php';
 require_once 'Tags.php';
+require_once 'Token.php';
  
 
  
 class Comentario {
+    
+    
     function ConsultarComentarioPorUsuario($usuario)
     {
         
@@ -16,20 +19,23 @@ class Comentario {
     $z=$x->getAll();
     return $z;
         
-        
-        
+           
     }
     
-     function ConsultarComentarioPorTags($tag)
+   
+    
+    
+     function ConsultarComentarioPorId($idcomentario)
     {
         
     $a=new ManejadorCassandra();
  
     
-    $x=$a->ConsultaPorParametro('comentario',array('tags'=>$tag));
+    $x=$a->ConsultaPorParametro('comentario',array('idcomentario'=>$idcomentario));
     $z=$x->getAll();
     return $z;
     }
+    
         
      function ConsultarComentarioPorFecha($fecha)
     {
@@ -44,25 +50,35 @@ class Comentario {
     
     }
     
-     function EliminarComentario($id)
-    {
+     function EliminarComentario($token,$id){
+    
+    $t=new Token();
+    if ($t->ValidarToken($token)==TRUE){
         
     $a=new ManejadorCassandra();
     
     $x=$a->Eliminar('comentario.'.$id);
-      
+     
     }
     
+    return 'El token se vencio';
+    
+    
+        
+    }
         
     
-    function InsertarComentario($key,$adjunto,$descripcion,$fechapublicacion,$megusta,$nomegusta,$nick,$tag)
+    function InsertarComentario($token,$idcomentario,$idcomentarioraiz,$adjunto,$descripcion,$fechapublicacion,$megusta,$nomegusta,$nick,$tag)
     {
-    
+    $t=new Token();
+    if ($t->ValidarToken($token)=='true'){
     $t=new Tags();
     if ($t->ConsultarTagsPorNombre($tag)!=NULL){
     $a=new ManejadorCassandra();
     
-    $x=$a->Insertar('comentario',$key,array ('adjunto'=>$adjunto, 
+    $x=$a->Insertar('comentario',$idcomentario,array ('idcomentario'=>$idcomentario,
+                                             'idcomentarioraiz'=>$idcomentarioraiz,
+                                             'adjunto'=>$adjunto, 
                                              'descripcion'=>$descripcion,
                                              'fechapublicacion'=>$fechapublicacion,
                                              'megusta'=>$megusta,
@@ -75,24 +91,12 @@ class Comentario {
     }
     return 'El tag no existe';
     }
-    
-    
-     function ModificarComentario($key,$adjunto,$descripcion,$fechapublicacion,$megusta,$nomegusta)
-    {
-        
-            $a=new ManejadorCassandra();
-           
-    
-            $x=$a->Insertar('comentario',$key,array ('adjunto'=>$adjunto, 
-                                                  'descripcion'=>$descripcion,
-                                                  'fechapublicacion'=>$fechapublicacion,
-                                                  'megusta'=>$megusta,
-                                                  'nomegusta'=>$nomegusta,
-                                               
-  
-                                                   ));
-             return $x;
+    return 'El token se vencio';
     }
+    
+
+    
+    
     
 }
 
