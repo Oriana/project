@@ -1,39 +1,32 @@
 <?php
 require_once 'Datos/ManejadorCassandra.php';
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of Tags
- *
- * @author karla
- */
 class Tags {
    function ConsultarTagsPorNombre($nombre)
     {
-        
-    $a=new ManejadorCassandra();
-    $a->Conectar();
-    
-    $x=$a->ConsultaPorParametro('tags',array('nombre'=>$nombre));
-    $z=$x->getAll();
-    return $z;
-        
+      if (isset($_SESSION['Usuario'])){   
+        $a=new ManejadorCassandra();
+
+        $x=$a->ConsultaPorParametro('tags',array('nombre'=>$nombre));
+        $z=$x->getAll();
+        return $z;
+      }
+      else{
+          return 'El usuario no ha iniciado sesion';
+      }
     }
     
     
     
-     function InsertarTags($nombreTags)
+     function InsertarTags($token,$nombre)
    {
-       
-       
-       if ($this->ConsultarTagsPorNombre($nombreTags)==NULL){
+       $t=new Token();
+       if ($t->ValidarToken($token)==TRUE){ 
+       if ($this->ConsultarTagsPorNombre($nombre)!=NULL){
         
         $a=new ManejadorCassandra();
    
-        $x=$a->Insertar ('tags',$nombreTags,array ('nombre'=>$nombreTags ));
+        $x=$a->Insertar ('tags',$nombre,array ('nombre'=>$nombre));
         return $x; 
        }
       
@@ -41,18 +34,21 @@ class Tags {
        return 'Este tag ya existe elija otro';
   
    }
-    
+   else{
+       return'El token se vencio';
+   }
+   }
     //OJO CON MODIFICAR //
    
-     function ModificarTags($nombreTags,$nombreNuevo)
+     function ModificarTags($token,$nombre,$nombreNuevo)
    {
-       
-       
-       if ($this->ConsultarTagsPorNombre($nombreTags)!=NULL){
+       $t=new Token();
+       if ($t->ValidarToken($token)==TRUE){ 
+       if ($this->ConsultarTagsPorNombre($nombre)!=NULL){
         
         $a=new ManejadorCassandra();
    
-        $x=$a->Modificar('tags',$nombreTags,array ('nombre'=>$nombreNuevo ));
+        $x=$a->Modificar('tags',$nombre,array ('nombre'=>$nombreNuevo ));
         return $x; 
        }
       
@@ -60,9 +56,26 @@ class Tags {
        return 'Este tag no existe';
   
    }
+   
+   else{
+       return 'El token se vencio';
+   }
+   }  
     
+    function EliminarTags($token,$nombre)
+    {
+    $t=new Token();
+    if ($t->ValidarToken($token)==TRUE){ 
+    $a=new ManejadorCassandra();
     
+    $x=$a->Eliminar('tags.'.$nombre);
+    return $x;
+      }
+      else{
     
+    return 'El token se vencio';
+      }
+    }
      
  
 }

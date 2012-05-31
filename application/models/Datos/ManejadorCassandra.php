@@ -12,11 +12,12 @@
  */
 
 // show all the errors
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 // the only file that needs including into your project
 require_once 'Cassandra/Cassandra.php';
-
+require_once '../models/Tags.php';
+require_once '../models/Token.php';
 class ManejadorCassandra {
     
        private $Cassandra;
