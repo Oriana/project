@@ -16,13 +16,14 @@
 
 // the only file that needs including into your project
 require_once 'Cassandra/Cassandra.php';
-require_once '../models/Tags.php';
-require_once '../models/Token.php';
+//require_once '../models/Tags.php';
+//require_once '../models/Token.php';
 class ManejadorCassandra {
     
-       private $Cassandra;
+     private $Cassandra;
     function Conectar (){
-
+    
+        //echo"  probando//";
         $servers = array(
              array(
         
@@ -34,7 +35,7 @@ class ManejadorCassandra {
 
         $cassandra = Cassandra::createInstance($servers);
         
-        $cassandra->useKeyspace('RedSocial');
+        $cassandra->useKeyspace('BlogSocial');
         $this->Cassandra=$cassandra;
         
     }
@@ -45,14 +46,14 @@ class ManejadorCassandra {
        $this->Conectar();
        $resultado = $this->Cassandra->cf ($cf)->getWhere($query);
        $this->Desconectar(); 
-        return $resultado;
+       return $resultado;
         
        
         
     }
     
      function Eliminar($query){
-        
+        echo"   // entro al eliminar";
        $this->Conectar(); 
        $resultado = $this->Cassandra->remove($query);
        $this->Desconectar();
@@ -83,6 +84,9 @@ class ManejadorCassandra {
     $this->Cassandra->closeConnections();
 
 }
+
+
+
 
     
 }

@@ -1,0 +1,232 @@
+<link href="<?php echo $this -> ruta . '/css/faary.css';?>" rel="stylesheet" type="text/css" media="screen" />
+<link href="<?php echo $this -> ruta . '/css/tcal.css';?>" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="<?php echo $this -> ruta . '/js/jquery.js';?>"></script>
+<script type="text/javascript" src="<?php echo $this -> ruta . '/js/tcal.js';?>"></script>
+
+<div id="wrapper">
+	<!-- end #header -->
+	<div id="page">
+		<div id="page-bgtop">
+			<div id="page-bgbtm">
+				<div id="content">
+					<div class="post">
+						<form method="post" action="<?php echo $this -> ruta . '/index/registrar';?>" onsubmit="return:false" class="iform">
+							<div id="imessageOK">
+								Thank you! Message Sent!
+							</div>
+							<div id="imessageERROR">
+								ERROR: Message Not Sent!
+							</div>
+							<ul>
+								<li class="iheader">
+									Contact Form
+								</li>
+								<li>
+									<label for="Nombre">Nombre</label>
+									<input class="itext" type="text" name="Nombre" id="Nombre" />
+								</li>
+								<li>
+									<label for="SegundoNombre">Segundo Nombre</label>
+									<input class="itext" type="text" name="SegundoNombre" id="SegundoNombre" />
+								</li>
+								<li>
+									<label for="Apellido">Apellido</label>
+									<input class="itext" type="text" name="Apellido" id="Apellido" />
+								</li>
+								<li>
+									<label for="SegundoApellido">Segundo Apellido</label>
+									<input class="itext" type="text" name="SegundoApellido" id="SegundoApellido" />
+								</li>
+								<li class="iheader">
+									Usuario
+								</li>
+								<li>
+									<label for="Username">Username</label>
+									<input class="itext" type="text" name="Username" id="Username" />
+								</li>
+								<li>
+									<label for="Contrasea">Contrase&ntilde;a</label>
+									<input class="itext" type="password" name="Contrasea" id="Contrasea" />
+								</li>
+								<li>
+									<label for="Contrasea1">Validar Contrase&ntilde;a</label>
+									<input class="itext" type="password" name="Contrasea1" id="Contrasea1" />
+								</li>
+								<li class="iheader">
+									Additional Information
+								</li>
+								<li>
+									<label for="fechadenacimiento">fecha de nacimiento</label>
+									<input class="tcal" type="text" name="date" id="fechadenacimiento" readonly="readonly" />
+								</li>
+								<li>
+									<label for="YourEmail">Your Email</label>
+									<input class="itext" type="text" name="YourEmail" id="YourEmail" />
+								</li>
+								<li>
+									<label for="Biografia">Biografia</label>									
+									<textarea class="itextarea" name="Biografia" id="Biografia"></textarea>
+								</li>
+								<li class="iseparator">
+									&nbsp;
+								</li>
+								<li>
+									<label>&nbsp;</label>
+									<input type="button" class="ibutton" onclick="sendForm(this.form)" name="SendaMessage" id="SendaMessage" value="Send a Message!" />
+								</li>
+							</ul>
+						</form>
+					</div>
+					<div style="clear: both;">
+						&nbsp;
+					</div>
+				</div>
+				<!-- end #content -->
+				<div id="sidebar">
+					<ul>
+						<li>
+							<h2>Aliquam tempus</h2>
+							<p>
+								Mauris vitae nisl nec metus placerat perdiet est. Phasellus dapibus semper consectetuer hendrerit.
+							</p>
+						</li>
+						<li>
+							<h2>Categories</h2>
+							<ul>
+								<li>
+									<a href="#">Aliquam libero</a>
+								</li>
+								<li>
+									<a href="#">Consectetuer adipiscing elit</a>
+								</li>
+								<li>
+									<a href="#">Metus aliquam pellentesque</a>
+								</li>
+								<li>
+									<a href="#">Suspendisse iaculis mauris</a>
+								</li>
+								<li>
+									<a href="#">Urnanet non molestie semper</a>
+								</li>
+								<li>
+									<a href="#">Proin gravida orci porttitor</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h2>Archives</h2>
+							<ul>
+								<li>
+									<a href="#">Aliquam libero</a>
+								</li>
+								<li>
+									<a href="#">Consectetuer adipiscing elit</a>
+								</li>
+								<li>
+									<a href="#">Metus aliquam pellentesque</a>
+								</li>
+								<li>
+									<a href="#">Suspendisse iaculis mauris</a>
+								</li>
+								<li>
+									<a href="#">Urnanet non molestie semper</a>
+								</li>
+								<li>
+									<a href="#">Proin gravida orci porttitor</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- end #sidebar -->
+				<div style="clear: both;">
+					&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end #page -->
+</div>
+<script type="text/javascript">
+	<!--
+	function isEmailValid(email) {
+		var e = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+		return e.test(email);
+	}
+
+	function ConfirmarEnvio(form) {
+		form.submit()
+	}
+
+	function sendForm(form) {
+
+		jQuery("#imessageOK, #imessageERROR").hide();
+		jQuery(".required").removeClass("required");
+		if(jQuery("#Nombre").val() == "") {
+			jQuery("#Nombre").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Apellido").val() == "") {
+			jQuery("#Apellido").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Username").val() == "") {
+			jQuery("#Username").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Contrasea").val() == "") {
+			jQuery("#Contrasea").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Contrasea1").val() == "") {
+			jQuery("#Contrasea1").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Contrasea1").val() != jQuery("#Contrasea").val()) {
+			jQuery("#Contrasea1").addClass("required");
+			jQuery("#Contrasea").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#fechadenacimiento").val() == "") {
+			jQuery("#fechadenacimiento").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#YourEmail").val() == "") {
+			jQuery("#YourEmail").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(!isEmailValid(jQuery("#YourEmail").val())) {
+			jQuery("#YourEmail").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		if(jQuery("#Biografia").val() == "") {
+			jQuery("#Biografia").addClass("required");
+			window.scroll(0, 0);
+			return false;
+		}
+		jQuery("#SendaMessage").val("Please Wait...");
+		var AddDetails;
+		AddDetails += "&Nombre=" + encodeURIComponent(jQuery("#Nombre").val());
+		AddDetails += "&SegundoNombre=" + encodeURIComponent(jQuery("#SegundoNombre").val());
+		AddDetails += "&Apellido=" + encodeURIComponent(jQuery("#Apellido").val());
+		AddDetails += "&SegundoApellido=" + encodeURIComponent(jQuery("#SegundoApellido").val());
+		AddDetails += "&Username=" + encodeURIComponent(jQuery("#Username").val());
+		AddDetails += "&Contrasea=" + encodeURIComponent(jQuery("#Contrasea").val());
+		AddDetails += "&Contrasea1=" + encodeURIComponent(jQuery("#Contrasea1").val());
+		AddDetails += "&fechadenacimiento=" + encodeURIComponent(jQuery("#fechadenacimiento").val());
+		AddDetails += "&YourEmail=" + encodeURIComponent(jQuery("#YourEmail").val());
+		AddDetails += "&Biografia=" + encodeURIComponent(jQuery("#Biografia").val());
+		ConfirmarEnvio(form);
+	}
+
+	-->
+</script>

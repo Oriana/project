@@ -180,6 +180,7 @@ class Zend_Rest_Server implements Zend_Server_Interface
             $request = $_REQUEST;
         }
         if (isset($request['method'])) {
+           
             $this->_method = $request['method'];
             if (isset($this->_functions[$this->_method])) {
                 if ($this->_functions[$this->_method] instanceof Zend_Server_Reflection_Function || $this->_functions[$this->_method] instanceof Zend_Server_Reflection_Method && $this->_functions[$this->_method]->isPublic()) {
